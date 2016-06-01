@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 ruby '2.3.0'
 gem 'rack', '~> 1.6.4'
-gem 'faye-websocket', '~> 0.10.4'
 gem 'redis', '~>3.2'
+gem 'puma'
