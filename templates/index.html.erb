@@ -41,15 +41,23 @@
             <strong>Version:</strong>
           </div>
           <div class="large-10 medium-10 columns">
-            <%= @model[:version] %>
+            <% if @model[:version] && !@model[:version].empty? %>
+              <%= @model[:version] %>
+            <% else %>
+              Not Found
+            <% end %>
           </div>
         </div>
         <div class="row">
           <div class="large-2 medium-2 columns">
-            <strong>Protocols Advertised:</strong>
+            <strong>Advertised:</strong>
           </div>
           <div class="large-10 medium-10 columns">
-            <%= @model[:protocols] %>
+            <% if @model[:protocols] && !@model[:protocols].empty? %>
+              <%= @model[:protocols] %>
+            <% else %>
+              Not Found
+            <% end %>
           </div>
         </div>
       <% end %>
