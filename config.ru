@@ -16,6 +16,7 @@ route("/validation.json") do
     website = @request.params['website']
     obj = {
       website: website,
+      version: version(website),
       protocols: protocols(website)
     }
 
