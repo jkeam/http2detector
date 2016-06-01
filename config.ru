@@ -3,7 +3,11 @@ require 'json'
 require 'simple_framework'
 require 'redis'
 
-redis = Redis.new
+if ENV["REDISCLOUD_URL"]
+  redis = Redis.new(:url => ENV["REDISCLOUD_URL"])
+else
+  redis = Redis.new
+end
 
 use Rack::Static,
   :urls => ["/images", "/js", "/css"],

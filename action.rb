@@ -66,11 +66,13 @@ class Action
     unless website.empty?
       cached = cache_get redis, website
       if cached
+        log 'cache hit'
         cached = JSON.parse cached
         obj[:website] = cached['website']
         obj[:version] = cached['version']
         obj[:protocols] = cached['protocols']
       else
+        log 'cache miss'
         obj[:website] = website
         obj[:version] = version(website)
         obj[:protocols] = protocols(website)
@@ -84,6 +86,10 @@ class Action
   end
 
   private
+    def log(message)
+      puts message + " at #{Time.new}"
+    end
+
     def cache_set(redis, website, obj)
       redis.set website, obj.to_json
     rescue Exception => e
