@@ -61,17 +61,38 @@ class Action
     end
   end
 
-  def validate(website)
+  def validate(website, redis)
     obj = {}
     unless website.empty?
-      obj[:website] = website
-      obj[:version] = version(website)
-      obj[:protocols] = protocols(website)
+      cached = cache_get redis, website
+      if cached
+        cached = JSON.parse cached
+        obj[:website] = cached['website']
+        obj[:version] = cached['version']
+        obj[:protocols] = cached['protocols']
+      else
+        obj[:website] = website
+        obj[:version] = version(website)
+        obj[:protocols] = protocols(website)
+      end
     else
       obj[:errors] = 'Missing website'
       status 500
     end
+    cache_set redis, website, obj
     model obj
   end
 
+  private
+    def cache_set(redis, website, obj)
+      redis.set website, obj.to_json
+    rescue Exception => e
+      puts e  
+    end
+
+    def cache_get(redis, website)
+      redis.get website
+    rescue Exception => e
+      puts e
+    end
 end
