@@ -20,11 +20,15 @@ route("/validation.json") do
       version: version(website),
       protocols: protocols(website)
     }
+
     unless website
       obj[:errors] = 'Missing website'
       status 500
     end
-   obj.to_json 
+
+    # fun debugging
+    puts obj.to_json 
+    obj.to_json 
   else 
     ''
   end
