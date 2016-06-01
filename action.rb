@@ -38,7 +38,7 @@ class Action
     to_return = nil
     advertised = `openssl s_client -connect "#{website}":443 -nextprotoneg '' 2> /dev/null`
     protocol_line = advertised.match(/Protocols advertised by server.*/)
-    to_return = protocol_line[0].gsub('Protocols advertised by server:', '').strip if protocol_line
+    to_return = protocol_line[0].gsub('Protocols advertised by server:', '').strip if protocol_line[0]
     to_return
   end
 
@@ -46,7 +46,7 @@ class Action
     to_return = nil
     protocol_line = `curl --http2 -I "#{website}" 2> /dev/null`
     lines = protocol_line.split("\n") if protocol_line
-    to_return = lines[0].split(' ')[0] if lines 
+    to_return = lines[0].split(' ')[0] if lines[0] 
     to_return
   end
 
