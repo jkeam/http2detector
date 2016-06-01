@@ -1,7 +1,6 @@
 $:.unshift File.dirname(__FILE__)
 require 'json'
 require 'simple_framework'
-# require 'curb'
 
 use Rack::Static,
   :urls => ["/images", "/js", "/css"],
@@ -17,7 +16,6 @@ route("/validation.json") do
     website = @request.params['website']
     obj = {
       website: website,
-      version: version(website),
       protocols: protocols(website)
     }
 
