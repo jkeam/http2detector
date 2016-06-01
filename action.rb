@@ -45,7 +45,8 @@ class Action
   def version(website)
     to_return = nil
     protocol_line = `curl --http2 -I "#{website}" 2> /dev/null`
-    to_return = protocol_line.split("\n")[0].split(' ')[0] if protocol_line
+    lines = protocol_line.split("\n") if protocol_line
+    to_return = lines[0].split(' ')[0] if lines 
     to_return
   end
 
