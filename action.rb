@@ -35,19 +35,32 @@ class Action
   end
 
   def protocols(website)
-    to_return = nil
+    to_return = '' 
     advertised = `openssl s_client -connect "#{website}":443 -nextprotoneg '' 2> /dev/null`
     protocol_line = advertised.match(/Protocols advertised by server.*/)
     to_return = protocol_line[0].gsub('Protocols advertised by server:', '').strip if protocol_line
-    to_return
+    to_return.split(',').map(&:strip)
   end
 
   def version(website)
     to_return = nil
-    protocol_line = `curl --http2 -I "#{website}"`
+    protocol_line = `curl --http2 -I https://"#{website}"`
     lines = protocol_line.split("\n") if protocol_line
     to_return = lines[0].split(' ')[0] if lines[0] 
     to_return
+  end
+
+  def validate(website)
+    obj = {}
+    unless website.empty?
+      obj[:website] = website
+      obj[:version] = version(website)
+      obj[:protocols] = protocols(website)
+    else
+      obj[:errors] = 'Missing website'
+      status 500
+    end
+    model obj
   end
 
 end

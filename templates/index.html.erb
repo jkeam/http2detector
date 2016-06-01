@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8">
     <title>HTTP2 Validator</title>
-    <script src="https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.css">
   </head>
   <body>
@@ -15,22 +14,48 @@
       </p>
     </div>
 
-    <div class="small-12 columns">
-      <form action='/validation.json' method="post">
-        <div class="row">
-          <div class="large-12 columns">
-            <label>Website
-              <input type="text" placeholder="Enter url here" name="website" />
-            </label>
-            <!-- <small class="error">Invalid entry</small> -->
+    <div class="row column">
+      <form action='/validation' method="post">
+
+        <% if @model[:errors] %>
+          <div class="callout alert">
+            <h5>Error</h5>
+            <p>
+              <%= @model[:errors] %>
+            </p>
           </div>
-        </div>
-        <div class="row">
-          <div class="large-12 columns">
-            <input type="submit" value="Submit" class="button" />
+        <% end %>
+
+        <div class="input-group">
+          <span class="input-group-label">https://</span>
+          <input class="input-group-field" type="text" placeholder="Enter url here" name="website" value="<%= @model[:website] %>" />
+          <div class="input-group-button">
+            <input type="submit" class="button" value="Submit">
           </div>
         </div>
       </form>
+
+      <% if @model[:website] %>
+        <div class="row">
+          <div class="large-2 medium-2 columns">
+            <strong>Version:</strong>
+          </div>
+          <div class="large-10 medium-10 columns">
+            <%= @model[:version] %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-2 medium-2 columns">
+            <strong>Protocols Advertised:</strong>
+          </div>
+          <div class="large-10 medium-10 columns">
+            <%= @model[:protocols] %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </body>
+
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.js"></script>
 </html>

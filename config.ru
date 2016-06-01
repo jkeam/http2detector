@@ -12,25 +12,20 @@ route("/") do
 end
 
 route("/validation.json") do
+  obj = {}
   if @request.post?
-    website = @request.params['website']
-    obj = {
-      website: website,
-      version: version(website),
-      protocols: protocols(website)
-    }
-
-    unless website
-      obj[:errors] = 'Missing website'
-      status 500
-    end
-
-    # fun debugging
-    puts obj.to_json 
-    obj.to_json 
-  else 
-    ''
+    website = @request.params['website'].to_s.strip
+    obj = validate website 
   end
+  obj.to_json
+end
+
+route("/validation") do
+  if @request.post?
+    website = @request.params['website'].to_s.strip
+    validate website
+  end
+  erb 'index.html'
 end
 
 run SimpleFramework.app
