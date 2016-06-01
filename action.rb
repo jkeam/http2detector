@@ -66,13 +66,13 @@ class Action
     unless website.empty?
       cached = cache_get redis, website
       if cached
-        log 'cache hit'
+        log "cache hit for #{website}"
         cached = JSON.parse cached
         obj[:website] = cached['website']
         obj[:version] = cached['version']
         obj[:protocols] = cached['protocols']
       else
-        log 'cache miss'
+        log "cache miss for #{website}"
         obj[:website] = website
         obj[:version] = version(website)
         obj[:protocols] = protocols(website)
