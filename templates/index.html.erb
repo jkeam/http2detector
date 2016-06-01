@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>HTTP2 Validator</title>
+    <script src="https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.css">
+  </head>
+  <body>
+
+    <div class="row column text-center">
+      <h1>HTTP2 Validator</h1>
+      <p class="lead">
+        A site to check http2 support for various websites
+      </p>
+    </div>
+
+    <div class="small-12 columns">
+      <form action='/validation.json' method="post">
+        <div class="row">
+          <div class="large-12 columns">
+            <label>Website
+              <input type="text" placeholder="Enter url here" name="website" />
+            </label>
+            <!-- <small class="error">Invalid entry</small> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-12 columns">
+            <input type="submit" value="Submit" class="button" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
