@@ -54,8 +54,9 @@ class Action
 
     uri = URI("http://162.243.195.43:8080/?website=https://#{website}")
     resp = JSON.parse Net::HTTP.get(uri)
-    if resp['methods']
-      resp['methods'].join(',')
+    methods = resp['methods']
+    if methods && !methods.empty?
+      methods.map{|m| m.split(' ')[0] }.join(',')
     else
       ''
     end
